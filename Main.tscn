@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://cwddektpcbblu"]
+
+[ext_resource type="PackedScene" uid="uid://bd0qqmt1wscyp" path="res://player.tscn" id="1_ex7jt"]
+[ext_resource type="PackedScene" uid="uid://ddosvux1dl0jl" path="res://HUD.tscn" id="2_nmx0o"]
+[ext_resource type="PackedScene" uid="uid://h5gtl5hlg47" path="res://bg.tscn" id="3_n7rpk"]
+[ext_resource type="PackedScene" uid="uid://dpesajmkm28t2" path="res://bomb.tscn" id="6_iasqx"]
+
+[node name="Node" type="Node"]
+
+[node name="Player" parent="." instance=ExtResource("1_ex7jt")]
+
+[node name="CanvasLayer" parent="." instance=ExtResource("2_nmx0o")]
+
+[node name="Node2D" parent="." instance=ExtResource("3_n7rpk")]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+autoplay = true
+
+[node name="Bomb" parent="." instance=ExtResource("6_iasqx")]
+
+[connection signal="gameover" from="Player" to="CanvasLayer" method="_on_player_gameover"]
+[connection signal="score_incr" from="Player" to="CanvasLayer" method="_on_player_score_incr"]
+[connection signal="end_game" from="CanvasLayer" to="Player" method="_on_canvas_layer_end_game"]
+[connection signal="end_game" from="CanvasLayer" to="Node2D" method="_on_canvas_layer_end_game"]
+[connection signal="start_game" from="CanvasLayer" to="Player" method="_on_canvas_layer_start_game"]
+[connection signal="start_game" from="CanvasLayer" to="Node2D" method="_on_canvas_layer_start_game"]

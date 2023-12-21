@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=3 uid="uid://bd0qqmt1wscyp"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_cld18"]
+[ext_resource type="Texture2D" uid="uid://vft5kjcrmagt" path="res://sprite1.png" id="2_gpvpq"]
+[ext_resource type="Texture2D" uid="uid://2m5kgf4bnesg" path="res://sprite2.png" id="3_smsh8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4nee4"]
+size = Vector2(32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_khrf4"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_gpvpq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_smsh8")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2po32"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_suw2q"]
+size = Vector2(32, 32)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+visible = false
+position = Vector2(35, 480)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_cld18")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_4nee4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_khrf4")
+animation = &"new_animation"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_2po32")
+
+[node name="Area2D2" type="Area2D" parent="."]
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+shape = SubResource("RectangleShape2D_suw2q")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Area2D2" to="." method="_on_area_2d_2_body_entered"]
